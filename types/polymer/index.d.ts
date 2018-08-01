@@ -340,23 +340,31 @@ declare global {
       whenLoaded(cb: Function): void;
     }
 
+    interface BindingScopeModel {
+      [k: string]: Base;
+    }
+
+    interface Templatizer {
+      templatize(template: HTMLTemplateElement, mutableData?: boolean);
+      stamp(model: {}): Base;
+      modelForElement: (elem: HTMLElement) => BindingScopeModel;
+    }
+
     interface PolymerStatic {
       Settings: Settings;
 
-      isInstance(element: string): boolean;
-      Base: Base;
       dom: DomApiStatic;
 
-      (prototype: Base | { new (): Base }): CustomElementConstructor;
+      (prototype: Base|{new(): Base}): webcomponents.CustomElementConstructor;
 
-      Class(prototype: Base | { new (): Base }): CustomElementConstructor;
+      Class(prototype: Base|
+            {new(): Base}): webcomponents.CustomElementConstructor;
 
-      RenderStatus: RenderStatus
+      RenderStatus: RenderStatus;
 
       ArraySplice: ArraySplice;
 
-      /** @deprecated */
-      ImportStatus: ImportStatus
+      Templatizer: Templatizer;
     }
   }
 
